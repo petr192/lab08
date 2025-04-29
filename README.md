@@ -35,4 +35,4 @@ ODS используется для хранения истории, т.к. RAW 
 Адреса:
 Clickhouse http://89.208.211.89:8123/default
 Airflow http://89.208.211.89:8081
-Superdet http://89.208.211.89:8088/lab8
+Superset http://89.208.211.89:8088/lab8
