@@ -28,7 +28,7 @@ from raw.location_events
 --insert into CDM tables (is in DAG)
 --1 Распределение событий по часам (столбики)
 CREATE MATERIALIZED VIEW cdm.mv_rep1_events_per_hour
-REFRESH EVERY 1 WEEK TO cdm.rep1_events_per_hour
+REFRESH EVERY 1 WEEK offset 5 day 7 hour TO cdm.rep1_events_per_hour
 as
 with be as
 (select * from ods.browser_events final
@@ -53,7 +53,7 @@ group by dt_hour
 
 --2 Количество купленных товаров в разрезе часа (либо таблица, либо пироги)
 CREATE MATERIALIZED VIEW cdm.mv_rep2_products_per_hour
-REFRESH EVERY 1 WEEK TO cdm.rep2_products_per_hour
+REFRESH EVERY 1 WEEK offset 5 day 7 hour TO cdm.rep2_products_per_hour
 as
 with be as
 (select * from ods.browser_events be final
@@ -82,7 +82,7 @@ group by dt_hour, page_url_path
 
 --3 Топ-10 посещённых страниц, с которых был переход в покупку — список ссылок с количеством покупок
 CREATE MATERIALIZED VIEW cdm.mv_rep3_top10_pages_buy
-REFRESH EVERY 1 WEEK TO cdm.rep3_top10_pages_buy
+REFRESH EVERY 1 WEEK offset 5 day 7 hour TO cdm.rep3_top10_pages_buy
 as
 with be as 
 (select * from ods.browser_events be final
@@ -115,7 +115,7 @@ limit 10
 
 --4 Проанализировать и визуализировать покупки по источникам. В данных заложены источники и рекламные кампании, из которых пользователи переходили на портал.
 CREATE MATERIALIZED VIEW cdm.mv_rep4_buys_source
-REFRESH EVERY 1 WEEK TO cdm.rep4_buys_source
+REFRESH EVERY 1 WEEK offset 5 day 7 hour TO cdm.rep4_buys_source
 as
 with be as 
 (select * from ods.browser_events be final
@@ -148,7 +148,7 @@ order by user_buy_cnt desc
 
 --5 Создайте визуализацию, показывающую процентное соотношение пользователей в различных сегментах, например, тех же источниках покупки.
 CREATE MATERIALIZED VIEW cdm.mv_rep5_users_segment
-REFRESH EVERY 1 WEEK TO cdm.rep5_users_segment
+REFRESH EVERY 1 WEEK offset 5 day 7 hour TO cdm.rep5_users_segment
 as
 with be as
 (select * from ods.browser_events be final
@@ -183,7 +183,7 @@ group by utm_source, user_cnt, user_total_cnt, share
 
 --6.1
 CREATE MATERIALIZED VIEW cdm.mv_rep6_1_events_per_our_browsers
-REFRESH EVERY 1 WEEK TO cdm.rep6_1_events_per_our_browsers
+REFRESH EVERY 1 WEEK offset 5 day 7 hour TO cdm.rep6_1_events_per_our_browsers
 as
 with be as
 (select * from ods.browser_events be final
@@ -215,7 +215,7 @@ group by dt_hour, browser_name, device_type --, page_url_path
 
 --6.2
 CREATE MATERIALIZED VIEW cdm.mv_rep2_products_per_hour_browsers
-REFRESH EVERY 1 WEEK TO cdm.rep2_products_per_hour_browsers
+REFRESH EVERY 1 WEEK offset 5 day 7 hour TO cdm.rep2_products_per_hour_browsers
 as
 with be as
 (select * from ods.browser_events be final
@@ -247,7 +247,7 @@ group by dt_hour, page_url_path, browser_name, device_type
 
 --6.3
 CREATE MATERIALIZED VIEW cdm.mv_rep3_top10_pages_buy_browser
-REFRESH EVERY 1 WEEK TO cdm.rep3_top10_pages_buy_browser
+REFRESH EVERY 1 WEEK offset 5 day 7 hour TO cdm.rep3_top10_pages_buy_browser
 as
 with be as
 (select * from ods.browser_events be final
@@ -289,7 +289,7 @@ group by page_url_path,browser_name, de.device_type
 
 --6_4 Какие-то графики показывающие какие сегменты пользователей больше всего покупают на сайте в плане количества покупок. Тут определить параметры сегментации предстоит вам. Они могут совпадать с другими предложенными вариантами в этом списке.
 CREATE MATERIALIZED VIEW cdm.mv_rep6_4_profile
-REFRESH EVERY 1 WEEK TO cdm.rep6_4_profile
+REFRESH EVERY 1 WEEK offset 5 day 7 hour TO cdm.rep6_4_profile
 as
 with be as
 (select * from ods.browser_events be final
